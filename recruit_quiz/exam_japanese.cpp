@@ -18,6 +18,10 @@ QuestionList CreateKanjiExam()
 		{ "相殺","そうさい"	 ,"足し引きの結果、差がなくなること" },
 		{ "凡例","はんれい"  ,"本や図表のはじめに、使い方や約束事を箇条書きしたもの" },
 		{ "約定","やくじょう","約束して決めること、契約" },
+		{"必定","ひつじょう","必ずそうなると決まっていること"},
+		{"知己","ちき","自分をよく理解してくれる人、親しい友人"},
+				//{"","",""},
+
 	};
 
 	constexpr int quizCount = 5;
@@ -56,6 +60,48 @@ QuestionList CreateKanjiExam()
 
 			questions.push_back({ s , to_string(correctNo) });
 		}
+	}
+	return questions;
+}
+
+/*
+* 慣用句の意味を答える問題を作成する
+*/
+QuestionList CreateIdiomExam()
+{
+	static const struct {
+		const char* idiom;	//慣用句
+		const char* meaning;//意味
+	} data[] = {
+		{"気のおけない","気づかいがいらない"},
+		{"琴線に触れる","心から感動する"},
+		{"汚名をそそぐ","名誉を回復する"},
+		{"言質を取る","証拠となる言葉を聞き出す"},
+		{"糠(ぬか)に釘","効き目がない"},
+	};
+
+	constexpr int quizCount = 5;
+	QuestionList questions;
+	questions.reserve(quizCount);
+	const vector<int> indices = CreateRandomIndices(size(data));
+	random_device rd;
+
+	for (int i = 0; i < quizCount; i++) {
+		//間違った番号をランダムに選ぶ
+		const int correctIndex = indices[i];
+		vector<int> answers = CreateWrongIndices(size(data), correctIndex);;
+
+		//ランダムな位置で上書き
+		const int correctNo = uniform_int_distribution<>(1, 3)(rd);
+		answers[correctNo - 1] = correctIndex;
+
+		//問題文を作成
+		string s = "「" + string(data[correctIndex].meaning) + "」の意味する熟語の番号を選べ";
+		for (int j = 0; j < 3; j++) {
+			s += "\n" + to_string(j + 1) + "：" + data[answers[j]].idiom;
+		}
+
+		questions.push_back({ s , to_string(correctNo) });
 	}
 	return questions;
 }
