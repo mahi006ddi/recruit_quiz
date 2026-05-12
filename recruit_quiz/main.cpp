@@ -20,6 +20,7 @@ int gcd(int a, int b)
 
 int main()
 {
+
 	vector<Question> questions(3);
 
 	random_device rd;
