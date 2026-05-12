@@ -9,5 +9,5 @@ struct Question
 	std::string a; //“š‚¦
 };
 
-//
+//–â‘è‚Ì”z—ñ‚Å•\‚·Œ^
 using QuestionList = std::vector<Question>;

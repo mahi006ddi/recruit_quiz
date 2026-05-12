@@ -1,4 +1,5 @@
 #include"question.h"
+#include"exam_japanese.h"
 #include<iostream>
 #include<string>
 #include<vector>
@@ -19,11 +20,6 @@ int gcd(int a, int b)
 
 int main()
 {
-	//Question questions[] = {
-	//	{"13×-5",13 * -5},
-	//	{"(-21)÷(-3)",-21 / -3},
-	//	{"7-(4÷2)+2",7 - (4 + 2) / 2},
-	//};
 	vector<Question> questions(3);
 
 	random_device rd;
@@ -102,7 +98,13 @@ int main()
 		to_string(z) });
 
 	cout << "[リクルート試験対策クイズ]\n";
-	//cout << "13×(-5)の答えは？\n";
+
+	cout << "教科を選んでください\n1=数学\n2=国語\n";
+	int subject;
+	cin >> subject;
+	if (subject == 2) {
+		questions = CreateKanjiExam();
+	}
 
 	for (const auto& e : questions) {
 		cout << e.q << "\n";
